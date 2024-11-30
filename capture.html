@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash Talk - Capture Photos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Capture page specific styles */
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #000;
+        }
+
+        .top-nav {
+            background-color: #000;
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            gap: 0.5rem;
+        }
+
+        .nav-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+        }
+
+        .nav-title h1 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: #fff;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding-top: 4rem;
+        }
+
+        .capture-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .camera-box {
+            flex: 1;
+            position: relative;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #webcam, #capturedImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .button-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0 2rem;
+            z-index: 10;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 2rem;
+            min-width: 200px;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background-color: #fff;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .popup-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: #666;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            background-color: var(--background-color);
+        }
+
+        .popup-body {
+            padding: 1.5rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+
+        .analysis-result {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .analysis-section {
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .analysis-section h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .analysis-section p {
+            margin: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .error {
+            text-align: center;
+            padding: 2rem;
+            color: var(--error-color);
+        }
+
+        .retry-btn {
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--error-color);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .retry-btn:hover {
+            background-color: #ff2222;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="top-nav">
+            <div class="nav-content">
+                <a href="dashboard.html" class="nav-back">
+                    <i data-lucide="arrow-left"></i>
+                    <span>Back</span>
+                </a>
+                <div class="nav-title">
+                    <i data-lucide="camera" class="nav-icon"></i>
+                    <h1>Analyze Waste</h1>
+                </div>
+                <div style="width: 24px;"></div><!-- Spacer for alignment -->
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="capture-container">
+                <div class="camera-box">
+                    <video id="webcam" autoplay playsinline></video>
+                    <img id="capturedImage" hidden>
+                    <canvas id="canvas" hidden></canvas>
+                </div>
+
+                <div class="button-container">
+                    <button id="captureBtn" class="btn btn-primary btn-large">
+                        <i data-lucide="camera"></i>
+                        Capture
+                    </button>
+                    <button id="retakeBtn" class="btn btn-outline btn-large" hidden>
+                        <i data-lucide="rotate-ccw"></i>
+                        Retake
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <div id="questionPopup" class="popup">
+            <div class="popup-content">
+                <div class="popup-header">
+                    <h2>Analysis Results</h2>
+                    <button id="closePopup" class="btn-icon">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <div class="popup-body">
+                    <div class="loading">Analyzing your waste item...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="capture.js"></script>
+</body>
+</html>
+

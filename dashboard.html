@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash Talk - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="top-nav">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <i data-lucide="recycle" class="brand-icon"></i>
+                    <h1>Trash Talk</h1>
+                </div>
+                <div class="user-menu">
+                    <button id="userMenuBtn" class="btn btn-icon">
+                        <i data-lucide="user"></i>
+                    </button>
+                    <div id="userDropdown" class="dropdown-menu" hidden>
+                        <span id="username">User</span>
+                        <a href="/" class="dropdown-item">
+                            <i data-lucide="log-out"></i>
+                            Log out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="content-grid">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Stats Card -->
+                    <div class="card stats-card">
+                        <h2>Your Impact</h2>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <i data-lucide="recycle"></i>
+                                <span class="stat-value">0</span>
+                                <span class="stat-label">Items Recycled</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="leaf"></i>
+                                <span class="stat-value">0 kg</span>
+                                <span class="stat-label">CO₂ Saved</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="flame"></i>
+                                <span class="stat-value">1</span>
+                                <span class="stat-label">Day Streak</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Capture Button -->
+                    <a href="capture.html" class="capture-card">
+                        <div class="capture-content">
+                            <div class="capture-icon">
+                                <i data-lucide="camera"></i>
+                            </div>
+                            <div class="capture-text">
+                                <h3>Analyze Waste Item</h3>
+                                <p>Take a photo to get AI-powered recycling guidance</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Groups Card -->
+                    <div class="card groups-card">
+                        <div class="card-header">
+                            <h2>Groups</h2>
+                            <div class="button-group">
+                                <button type="button" id="createGroupBtn" class="btn btn-primary">
+                                    <i data-lucide="users"></i>
+                                    Create Group
+                                </button>
+                                <button type="button" id="joinGroupBtn" class="btn btn-primary">
+                                    <i data-lucide="user-plus"></i>
+                                    Join Group
+                                </button>
+                            </div>
+                        </div>
+                        <div id="groupsList" class="groups-list">
+                            <p class="empty-state">Loading groups...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Leaderboard Card -->
+                    <div class="card leaderboard-card">
+                        <div class="card-header">
+                            <h2>Group Leaderboard</h2>
+                            <select id="groupSelect" class="select-minimal">
+                                <option value="">Select a group</option>
+                            </select>
+                        </div>
+                        <div id="leaderboardList" class="leaderboard-list">
+                            <p class="empty-state">Select a group to view leaderboard</p>
+                        </div>
+                    </div>
+
+                    <!-- History Card -->
+                    <div class="card history-card">
+                        <div class="card-header">
+                            <h2>Recent Activity</h2>
+                        </div>
+                        <div id="recentPhotos" class="recent-photos">
+                            <p class="empty-state">No items analyzed yet. Start by capturing a photo!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="groupModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Create Group</h2>
+                <button id="closeModal" class="btn-close" type="button">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="groupForm" class="group-form">
+                <div id="createGroupFields">
+                    <div class="form-group">
+                        <label for="groupName">Group Name</label>
+                        <input 
+                            type="text" 
+                            id="groupName" 
+                            name="groupName" 
+                            class="form-input"
+                            minlength="3"
+                            autocomplete="off"
+                            placeholder="Enter group name"
+                        >
+                    </div>
+                </div>
+                <div id="joinGroupFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="groupCode">Group Code</label>
+                        <input 
+                            type="text" 
+                            id="groupCode" 
+                            name="groupCode" 
+                            class="form-input"
+                            pattern="[0-9]{6}"
+                            maxlength="6"
+                            autocomplete="off"
+                            placeholder="Enter 6-digit code"
+                        >
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i data-lucide="check"></i>
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+</html> 

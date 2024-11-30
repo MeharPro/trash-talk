@@ -1,0 +1,19 @@
+{
+  "groups": {
+    "123456": {
+      "name": "Elsie MacGill Secondary School",
+      "members": [
+        "bob@gmail.com",
+        "mcbr@gmail.com"
+      ],
+      "totalEmissions": 55.18
+    },
+    "583721": {
+      "name": "Milton District High School",
+      "members": [
+        "bob@gmail.com"
+      ],
+      "totalEmissions": 36.47
+    }
+  }
+}
