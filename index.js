@@ -7,7 +7,7 @@ const fileUpload = require('express-fileupload');
 const app = express();
 
 // OpenRouter API Configuration
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = "useyourown";
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 // Middleware
